@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+
+    <bean id="vat" class="com.efimchick.springtutorial.aop.economics.advices.VatAdvice">
+        <constructor-arg value="0.20"/>
+    </bean>
+
+    <bean id="vasya" class="com.efimchick.springtutorial.aop.economics.Person">
+        <constructor-arg value="Vasilii"/>
+    </bean>
+
+
+    <bean id="starbux" class="com.efimchick.springtutorial.aop.economics.Company">
+        <constructor-arg value="Starbux"/>
+    </bean>
+
+    <bean id="eci" class="com.efimchick.springtutorial.aop.economics.Company">
+        <constructor-arg value="Ethiopia Coffee Inc"/>
+    </bean>
+
+    <bean id="bank" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target">
+            <bean class="com.efimchick.springtutorial.aop.economics.Bank"/>
+        </property>
+        <property name="interceptorNames" value="vat"/>
+    </bean>
+
+
+</beans>

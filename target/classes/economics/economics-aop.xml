@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:aop="http://www.springframework.org/schema/aop"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <bean id="vasya" class="com.efimchick.springtutorial.aop.economics.Person">
+        <constructor-arg value="Vasilii"/>
+    </bean>
+
+    <bean id="starbux" class="com.efimchick.springtutorial.aop.economics.Company">
+        <constructor-arg value="Starbux"/>
+    </bean>
+
+
+    <bean id="eci" class="com.efimchick.springtutorial.aop.economics.Company">
+        <constructor-arg value="Ethiopia Coffee Inc"/>
+    </bean>
+
+    <bean id="bank" class="com.efimchick.springtutorial.aop.economics.Bank"/>
+
+
+
+
+    <bean id="vat"
+          class="com.efimchick.springtutorial.aop.economics.advices.VATSimpleAdvice">
+        <constructor-arg value="0.20"/>
+    </bean>
+
+    <aop:config>
+        <aop:pointcut id="payPointcut" expression="bean(bank)
+        and execution(* pay(com.efimchick.springtutorial.aop.economics.Payment))
+        and args(payment)"/>
+        <aop:aspect ref="vat">
+            <aop:after pointcut-ref="payPointcut" method="execVat"/>
+        </aop:aspect>
+    </aop:config>
+
+
+</beans>
